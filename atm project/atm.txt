@@ -1,0 +1,160 @@
+  1  #include <iostream>
+  2  using namespace std;
+  3  
+  4  int accountNumbers[5] = {100, 200, 300, 400, 500};
+  5  double balance[5] = {1000.00, 1500.00, 200.00, 7500.00, 15000.00};
+  6  
+  7  int accountIndex = -1;
+  8  
+  9  void checkBalanceFunction()
+ 10  {
+ 11      cout << "your balance is: " << balance[accountIndex]<< endl << endl;
+ 12  }
+ 13  
+ 14  void depositFunction()
+ 15  {
+ 16      double amount;
+ 17  
+ 18      cout << "Enter Deposit Amount: ";
+ 19      cin  >> amount;
+ 20  
+ 21      if(amount > 0)
+ 22          balance[accountIndex] += amount;
+ 23  
+ 24      else
+ 25          cout << "Could not Complete the operation ,because of invalid amount value" <<endl << endl;
+ 26  
+ 27      cout << "Operation done successfully\n";
+ 28      checkBalanceFunction();
+ 29  }
+ 30  
+ 31  void withdrawFunction()
+ 32  {
+ 33      double amount;
+ 34      int done = 0;
+ 35  
+ 36      cout << "Enter Withdraw Amount: ";
+ 37      cin  >> amount;
+ 38  
+ 39      if(balance[accountIndex] >= amount)
+ 40      {
+ 41          if(amount > 0)
+ 42          {
+ 43              balance[accountIndex] -= amount;
+ 44              done = 1;
+ 45          }
+ 46  
+ 47          else
+ 48              cout << "Could not Complete the operation ,because of invalid amount value" <<endl <<endl;
+ 49      }
+ 50      else
+ 51          cout << "You Don't have enough money" << endl;
+ 52  
+ 53      if (done == 1)
+ 54          cout << "Operation done successfully\n";
+ 55  
+ 56      checkBalanceFunction();
+ 57  }
+ 58  
+ 59  void transferFunction()
+ 60  {
+ 61      int done = 0;
+ 62      double amount;
+ 63      int receiverIndex = -1;
+ 64      int receiverNumber;
+ 65  
+ 66      cout << "Type account number for the receiver: ";
+ 67      cin  >> receiverNumber;
+ 68  
+ 69      for(int i=0; i<5; i++)
+ 70      {
+ 71          if(receiverNumber == accountNumbers[i]&& i!=accountNumbers[i])
+ 72              receiverIndex = i;
+ 73      }
+ 74  
+ 75      if(receiverIndex == -1)
+ 76      {
+ 77          cout << "please enter valid account number" << endl << endl;
+ 78          return;
+ 79      }
+ 80  
+ 81      cout << "Type the amount for transfer: ";
+ 82      cin  >> amount;
+ 83  
+ 84      if(balance[accountIndex] >= amount)
+ 85      {
+ 86          if(amount > 0)
+ 87          {
+ 88              balance[accountIndex]  -= amount;
+ 89              balance[receiverIndex] += amount;
+ 90              done = 1;
+ 91          }
+ 92      }
+ 93      else
+ 94          cout << "You do not have enough money";
+ 95  
+ 96      if (done == 1)
+ 97          cout << "Operation done successfully\n";
+ 98  
+ 99      checkBalanceFunction();
+100  }
+101  
+102  int main()
+103  {
+104      int isLoggin = 0;
+105      int currentAccountNumber;
+106  
+107      while(isLoggin == 0)
+108      {
+109          cout << "Enter you Account Number: ";
+110          cin  >> currentAccountNumber;
+111          cout << "" << endl;
+112  
+113          for(int i=0; i<5; i++)
+114          {
+115              if(currentAccountNumber == accountNumbers[i])
+116              {
+117                  accountIndex = i;
+118                  isLoggin = 1;
+119                  break;
+120              }
+121          }
+122  
+123          if(isLoggin == 0)
+124              cout << "Wrong Account Number\n" << endl;
+125      }
+126  
+127      int choise;
+128      do
+129      {
+130          cout << "==============================" << endl;
+131          cout << "| [1] | Check Balance        |" << endl;
+132          cout << "| [2] | Deposit              |" << endl;
+133          cout << "| [3] | Withdraw             |" << endl;
+134          cout << "| [4] | Transfer             |" << endl;
+135          cout << "| [5] | Exit                 |" << endl;
+136          cout << "==============================" << endl;
+137          cin  >> choise;
+138  
+139          if(choise == 1)
+140              checkBalanceFunction();
+141  
+142          else if (choise == 2)
+143              depositFunction();
+144  
+145          else if (choise == 3)
+146              withdrawFunction();
+147  
+148          else if (choise == 4)
+149              transferFunction();
+150  
+151          else if (choise == 5)
+152              cout << "Thanks for using our ATM :)" << endl;
+153  
+154          else
+155              cout << "Wrong value" << endl;
+156      }
+157      while(choise != 5);
+158  
+159      return 0;
+160  }
